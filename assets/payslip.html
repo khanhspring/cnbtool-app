@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payslip</title>
+</head>
+<body style="margin: 0; padding: 0;">
+  <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#EEEEEE">
+    <tr>
+      <td>
+        <table align="center" cellpadding="0" cellspacing="0" width="650" style="font-size: 15px;  line-height: 22px">
+          <tr>
+            <td align="center" style="padding-top: 30px; padding-bottom: 10px">
+              <img src="https://acaziasoft.com/wp-content/uploads/2019/04/logo-2.png" width="145px"/>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding-top: 20px; padding-bottom: 10px">
+              <table width="100%" align="center" bgcolor="#fff" style="padding: 20px">
+                <tr>
+                  <td style="padding: 10px 0; text-align: center; font-weight: bold; font-size: 18px">PAYSLIP  - 05/2020</td>
+                </tr>
+                <tr>
+                  <td colspan="3"style="padding-top: 10px">
+                    <b th:text="#{mail.payslip.information-confidential}"></b>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top: 10px; text-align: justify; line-height: 22px" th:utext="#{mail.payslip.information-confidential-detail}"></td>
+                </tr><tr>
+                <td style="padding-top: 20px;" th:utext="#{mail.payslip.contact-info}"></td>
+              </tr>
+                <tr>
+                  <td style="padding-top: 20px">
+                    <b th:text="#{mail.payslip.salary-info-title}"></b>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top: 10px">
+                    <table width="100%" style="border: 1px solid #ccc; border-collapse: collapse">
+                      <tr>
+                        <td width="250"  style="border: 1px solid #ccc; padding: 7px">
+                          <b th:text="#{mail.payslip.label.full-name}"></b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${employee.fullName}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px">
+                          <b th:text="#{mail.payslip.label.salary}"></b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(currentSalary.amount, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.salary-si}"></i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(socialInsurance.contributionFixed, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.salary-performance}"></i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b>0</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px;">
+                          <b th:text="#{mail.payslip.label.working-salary}"></b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(summary.calculatedSalary, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.standard-working-hours}"></i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(timeSheet.standardWorkingHours, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.actual-working-hours}"></i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(timeSheet.workingHours, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.vacation-hours}"></i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(timeSheet.vacationHours, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px;">
+                          <b th:text="#{mail.payslip.label.overtime}"></b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(summary.otToMoney, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.overtime-100}"></i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(summary.ot100ToMoney, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.overtime-120}"></i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(summary.ot120ToMoney, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.overtime-150}">Overtime coefficient  1.5</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(summary.ot150ToMoney, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px;">
+                          <b th:text="#{mail.payslip.label.allowances}">Allowances</b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger((allowances.totalAmount + summary.bizTripDaysToMoney), 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.allowance-biz-trip}">Allowance for Business Trip</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(summary.bizTripDaysToMoney, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.compensation}">Compensation for last month</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(allowances.groups['COMPENSATION'] != null ? allowances.groups['COMPENSATION'] : 0, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.other-allowances}">Other allowances</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger((allowances.totalAmount - (allowances.groups['COMPENSATION'] != null ? allowances.groups['COMPENSATION'] : 0)), 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px;">
+                          <b th:text="#{mail.payslip.label.bonuses}">Bonuses</b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(bonuses.totalAmount, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.performance-bonus}">Performance bonus / Project bonus</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger((bonuses.groups['PERFORMANCE_PROJECT'] != null ? bonuses.groups['PERFORMANCE_PROJECT'] : 0), 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.other-bonuses}">Other bonuses</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger((bonuses.totalAmount - (bonuses.groups['PERFORMANCE_PROJECT'] != null ? bonuses.groups['PERFORMANCE_PROJECT'] : 0)), 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px;">
+                          <b th:text="#{mail.payslip.label.si}">Social insurance</b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(socialInsurance.contribution, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.dependents}">Dependents</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(socialInsurance.dependents, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.family-allowance}">Family allowance</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(socialInsurance.familyAllowance, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px;">
+                          <b th:text="#{mail.payslip.label.taxes-and-fees}">Taxes and Fees</b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger((fees.totalAmount + taxes.personalIncomeTax), 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.personal-income-tax}">Personal income tax</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(taxes.personalIncomeTax, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 7px; padding-left: 30px">
+                          <i th:text="#{mail.payslip.label.fees}">Fees</i>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 7px; text-align: right">
+                          <b th:text="${#numbers.formatInteger(fees.totalAmount, 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td style="border: 1px solid #ccc; padding: 10px 7px; font-size: 15px; background: #009CDE; color: #fff;">
+                          <b th:text="#{mail.payslip.label.actual-income}">Actual income (VND)</b>
+                        </td>
+                        <td colspan="2" style="border: 1px solid #ccc; padding: 10px 7px; font-size: 15px; background: #009CDE; color: #fff; text-align: right">
+                          <b th:text="${#numbers.formatInteger((bankInfo.payRounded), 0, 'DEFAULT')}"></b>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; padding: 20px; padding-top: 10px; padding-bottom: 20px">
+              This email was sent with ♡ by © Acazia Software Company | 06th Floor Hong Ha Building, No 57/66 Ngoc Lam St. Long Bien Dist, Hanoi, Vietnam.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
